@@ -1,0 +1,4 @@
+src/
+coverage/
+jest.config.js
+.travis.yml

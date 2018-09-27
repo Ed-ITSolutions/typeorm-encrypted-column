@@ -1,0 +1,24 @@
+{
+  "name": "typeorm-encrypted-column",
+  "version": "0.0.1",
+  "description": "Encrypted columns for typeorm",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "compile": "tsc",
+    "prepublishOnly": "tsc",
+    "ci": "tsc & jest --coverage --coverageReporters=text-lcov | coveralls "
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "coveralls": "^3.0.2",
+    "jest": "^23.6.0",
+    "reflect-metadata": "^0.1.12",
+    "sql.js": "^0.5.0",
+    "ts-jest": "^23.10.2",
+    "typeorm": "^0.2.7",
+    "typescript": "^3.0.3"
+  }
+}
