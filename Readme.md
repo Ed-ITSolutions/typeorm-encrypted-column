@@ -6,7 +6,7 @@ Typeorm Encrypted Column is a replacement for [typeorm-encrypted](https://github
 
 Typeorm Encrypted Column works slightly differently.
 
-Typeorm Encrypted COlumn uses a decorator instead of retyping the options object passed to column. Using this decorator it validates the key and algorithm provided throwing an error if its not. This moves config errors to startup not the first time its used.
+Typeorm Encrypted Column uses a decorator instead of retyping the options object passed to column. Using this decorator it validates the key and algorithm provided throwing an error if they are not valid. This moves config errors to startup not the first time the encrypted column is accessed.
 
 ## Usage
 
