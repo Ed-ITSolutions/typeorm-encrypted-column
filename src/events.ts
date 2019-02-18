@@ -35,7 +35,7 @@ const forMatchingColumns = (entity: ObjectLiteral, cb: (propertyName: string, op
  * @param entity Typeorm Entity to check.
  */
 export const encrypt = <T extends ObjectLiteral>(entity: T): T => {
-  if (!entity) return entity;
+  if (!entity) return entity
 
   forMatchingColumns(entity, (propertyName, options) => {
     // For any matching columns encrypt the property
@@ -69,7 +69,7 @@ const encryptString = (string: string, options: EncryptionOptions) => {
  * @param entity The typeorm entity to check
  */
 export const decrypt = (entity: ObjectLiteral) => {
-  if (!entity) return entity;
+  if (!entity) return entity
 
   forMatchingColumns(entity, (propertyName, options) => {
     // For any matching columns decrypt the property
