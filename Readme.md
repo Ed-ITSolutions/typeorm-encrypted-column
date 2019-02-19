@@ -1,5 +1,7 @@
 # Typeorm Encrypted Column
 
+[![Build Status](https://travis-ci.org/Ed-ITSolutions/typeorm-encrypted-column.svg?branch=master)](https://travis-ci.org/Ed-ITSolutions/typeorm-encrypted-column) [![Coverage Status](https://coveralls.io/repos/github/Ed-ITSolutions/typeorm-encrypted-column/badge.svg?branch=master)](https://coveralls.io/github/Ed-ITSolutions/typeorm-encrypted-column?branch=master)
+
 Typeorm Encrypted Column is a replacement for [typeorm-encrypted](https://github.com/generalpiston/typeorm-encrypted).
 
 ## Differences
