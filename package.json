@@ -1,6 +1,6 @@
 {
   "name": "typeorm-encrypted-column",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Encrypted columns for typeorm",
   "main": "dist/index.js",
   "scripts": {
