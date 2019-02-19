@@ -1,4 +1,4 @@
-import {Entity, createConnection, PrimaryGeneratedColumn, getConnection} from "typeorm"
+import {Entity, createConnection, PrimaryGeneratedColumn, getConnection, ManyToMany, JoinTable} from "typeorm"
 import {Subscriber, EncryptedColumn} from './index'
 import 'reflect-metadata'
 
@@ -17,12 +17,19 @@ class Test{
     }
   })
   secret: string
+
+  @ManyToMany(type => Second, entity => entity.parents, { cascade: true })
+  @JoinTable()
+  childs: Second[]
 }
 
 @Entity()
 class Second{
   @PrimaryGeneratedColumn()
   id: number
+
+  @ManyToMany(type => Test, test => test.childs)
+  parents: Test[]
 }
 
 beforeAll(async () => {
@@ -70,4 +77,24 @@ test('it should update data', async () => {
   let u = await repository.findOneOrFail()
 
   expect(u.secret).toBe('tested')
+})
+
+test('N:N relation should be saved', async () => {
+  let connection = getConnection()
+  let repository = connection.getRepository(Test)
+
+  let t = await repository.findOneOrFail()
+
+  t.childs = [new Second, new Second]
+
+  await repository.save(t)
+})
+
+test('N:N relation should be joined', async () => {
+  let connection = getConnection()
+  let repository = connection.getRepository(Test)
+
+  let t = await repository.findOneOrFail({ relations: ['childs'] })
+
+  expect(t.childs.length).toBe(2)
 })
