@@ -20,7 +20,7 @@ class Test{
 
   @ManyToMany(type => Second, entity => entity.parents, { cascade: true })
   @JoinTable()
-  childs: Second[]
+  children: Second[]
 }
 
 @Entity()
@@ -28,7 +28,7 @@ class Second{
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToMany(type => Test, test => test.childs)
+  @ManyToMany(type => Test, test => test.children)
   parents: Test[]
 }
 
@@ -85,7 +85,7 @@ test('N:N relation should be saved', async () => {
 
   let t = await repository.findOneOrFail()
 
-  t.childs = [new Second, new Second]
+  t.children = [new Second, new Second]
 
   await repository.save(t)
 })
@@ -94,7 +94,7 @@ test('N:N relation should be joined', async () => {
   let connection = getConnection()
   let repository = connection.getRepository(Test)
 
-  let t = await repository.findOneOrFail({ relations: ['childs'] })
+  let t = await repository.findOneOrFail({ relations: ['children'] })
 
-  expect(t.childs.length).toBe(2)
+  expect(t.children.length).toBe(2)
 })
