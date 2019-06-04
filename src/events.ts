@@ -11,18 +11,16 @@ import {randomBytes, createCipheriv, createDecipheriv} from 'crypto'
 const forMatchingColumns = (entity: ObjectLiteral, cb: (propertyName: string, options: EncryptionOptions) => void) => {
   // Iterate through all columns in Typeorm
   getMetadataArgsStorage().columns.forEach((column) => {
-    // If this column is from the current entity
-    if(entity.constructor === column.target){
-      let {options, propertyName} = column
-      let columnOptions = options as EncryptedColumnOptions
-
-      if(
-        columnOptions.encrypt // Does this column have encryption options
-        &&
-        column.mode === 'regular' // Is it a regular column
-        &&
-        entity[propertyName] // Does the passed entity have the property
-      ){
+    const {options, propertyName, mode, target} = column
+    const columnOptions = options as EncryptedColumnOptions
+    if(
+      columnOptions.encrypt // Does this column have encryption options
+      &&
+      mode === 'regular' // Is it a regular column
+      &&
+      (columnOptions.encrypt.looseMatching || entity.constructor === target) // Is looseMatching enabled OR is this column from the current entity?
+    ){
+      if (entity[propertyName]) {  // Does the passed entity have the property?
         cb(propertyName, columnOptions.encrypt)
       }
     }

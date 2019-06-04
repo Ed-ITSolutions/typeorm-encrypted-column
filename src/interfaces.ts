@@ -13,6 +13,8 @@ export interface EncryptionOptions{
   algorithm: string
   /** IV Length to use in bytes. */
   ivLength: number
+  /** Loose matching skips the column/entity relationship check */
+  looseMatching?: boolean
 }
 
 export const EncryptedColumn = (options: EncryptedColumnOptions) => {
