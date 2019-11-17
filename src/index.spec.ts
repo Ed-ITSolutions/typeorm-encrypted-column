@@ -72,7 +72,9 @@ test('it should update data', async () => {
 
   t.secret = 'tested'
 
-  await repository.save(t)
+  const result = await repository.save(t)
+
+  expect(result.secret).toBe('tested')
 
   let u = await repository.findOneOrFail()
 

@@ -13,6 +13,11 @@ export class Subscriber implements EntitySubscriberInterface {
     encrypt(event.entity, updatedColumns)
   }
 
+  afterUpdate(event: UpdateEvent<ObjectLiteral>) {
+    const updatedColumns = event.updatedColumns.map(({propertyName}) => propertyName)
+    decrypt(event.entity, updatedColumns)
+  }
+
   afterLoad(entity: ObjectLiteral) {
     decrypt(entity)
   }

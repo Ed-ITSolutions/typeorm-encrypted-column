@@ -74,14 +74,15 @@ const encryptString = (string: string, options: EncryptionOptions) => {
  * Checks the supplied entity for columns that need decrypting and decrypts them.
  *
  * @param entity The typeorm entity to check
+ * @param includeProperties
  */
-export const decrypt = (entity: ObjectLiteral) => {
+export const decrypt = <T extends ObjectLiteral>(entity: T, includeProperties: string[] = []): T => {
     if (!entity) return entity
 
     forMatchingColumns(entity, (propertyName, options) => {
         // For any matching columns decrypt the property
         entity[propertyName] = decryptString(entity[propertyName], options)
-    })
+    }, includeProperties)
 
     return entity
 }
