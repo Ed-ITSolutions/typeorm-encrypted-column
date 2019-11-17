@@ -4,13 +4,16 @@ import {randomBytes, createCipheriv, createDecipheriv} from 'crypto'
 
 /**
  * For all columns that have encryption options run the supplied function.
- * 
+ *
  * @param entity The typeorm Entity.
  * @param cb Function to run for matching columns.
  */
 const forMatchingColumns = (entity: ObjectLiteral, cb: (propertyName: string, options: EncryptionOptions) => void) => {
   // Iterate through all columns in Typeorm
-  getMetadataArgsStorage().columns.forEach((column) => {
+  getMetadataArgsStorage().columns
+  // remove duplicate properties in case of inheritance,
+      .filter((item, pos, self) => self.findIndex(v => v.propertyName === item.propertyName) === pos)
+      .forEach((column) => {
     const {options, propertyName, mode, target} = column
     const columnOptions = options as EncryptedColumnOptions
     if(
@@ -29,7 +32,7 @@ const forMatchingColumns = (entity: ObjectLiteral, cb: (propertyName: string, op
 
 /**
  * Checks the supplied entity for encrypted columns and encrypts any columns that need it.
- * 
+ *
  * @param entity Typeorm Entity to check.
  */
 export const encrypt = <T extends ObjectLiteral>(entity: T): T => {
@@ -45,7 +48,7 @@ export const encrypt = <T extends ObjectLiteral>(entity: T): T => {
 
 /**
  * Encrypts the supplied string with the columns options.
- * 
+ *
  * @param string The string to encrypt.
  * @param options The encryption options.
  */
@@ -63,7 +66,7 @@ const encryptString = (string: string, options: EncryptionOptions) => {
 
 /**
  * Checks the supplied entity for columns that need decrypting and decrypts them.
- * 
+ *
  * @param entity The typeorm entity to check
  */
 export const decrypt = (entity: ObjectLiteral) => {
@@ -79,7 +82,7 @@ export const decrypt = (entity: ObjectLiteral) => {
 
 /**
  * Decrypts the supplied string using the column options.
- * 
+ *
  * @param string The string to decrypt,
  * @param options The encryption options.
  */
