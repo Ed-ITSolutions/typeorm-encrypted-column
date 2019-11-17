@@ -1,19 +1,19 @@
-import {EventSubscriber, EntitySubscriberInterface, InsertEvent, ObjectLiteral, UpdateEvent} from 'typeorm'
+import {EntitySubscriberInterface, EventSubscriber, InsertEvent, ObjectLiteral, UpdateEvent} from 'typeorm'
 
-import {encrypt, decrypt} from './events'
+import {decrypt, encrypt} from './events'
 
 @EventSubscriber()
-export class Subscriber implements EntitySubscriberInterface{
-  beforeInsert(event: InsertEvent<ObjectLiteral>){
+export class Subscriber implements EntitySubscriberInterface {
+  beforeInsert(event: InsertEvent<ObjectLiteral>) {
     encrypt(event.entity)
   }
 
-  beforeUpdate(event: UpdateEvent<ObjectLiteral>){
+  beforeUpdate(event: UpdateEvent<ObjectLiteral>) {
     const updatedColumns = event.updatedColumns.map(({propertyName}) => propertyName)
     encrypt(event.entity, updatedColumns)
   }
 
-  afterLoad(entity: ObjectLiteral){
+  afterLoad(entity: ObjectLiteral) {
     decrypt(entity)
   }
 }
