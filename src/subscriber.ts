@@ -8,6 +8,10 @@ export class Subscriber implements EntitySubscriberInterface {
     encrypt(event.entity)
   }
 
+  afterInsert(event: InsertEvent<ObjectLiteral>): Promise<any> | void {
+    decrypt(event.entity)
+  }
+
   beforeUpdate(event: UpdateEvent<ObjectLiteral>) {
     const updatedColumns = event.updatedColumns.map(({propertyName}) => propertyName)
     encrypt(event.entity, updatedColumns)
