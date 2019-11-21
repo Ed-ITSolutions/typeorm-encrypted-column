@@ -48,9 +48,15 @@ test('It should encrypt data', async () => {
   let connection = getConnection()
   let repository = connection.getRepository(Test)
 
-  await repository.save(entity)
+  const result = await repository.save(entity)
 
-  expect(entity.secret).not.toBe('test')
+  expect(result.secret).toBe('testing') // decrypted after insert
+
+  const raw = await repository
+    .createQueryBuilder('test')
+    .getRawOne()
+
+  expect(raw.test_secret).not.toBe('testing') // properly encrypted in db
 })
 
 test('It should fetch encrypted data', async () => {
@@ -72,11 +78,19 @@ test('it should update data', async () => {
 
   t.secret = 'tested'
 
-  await repository.save(t)
+  const result = await repository.save(t)
+
+  expect(result.secret).toBe('tested')
 
   let u = await repository.findOneOrFail()
 
   expect(u.secret).toBe('tested')
+
+  const raw = await repository
+    .createQueryBuilder('test')
+    .getRawOne()
+
+  expect(raw.test_secret).not.toBe('tested') // properly encrypted in db
 })
 
 test('N:N relation should be saved', async () => {
