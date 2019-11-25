@@ -16,13 +16,14 @@
     "url": "https://github.com/Ed-ITSolutions/typeorm-encrypted-column"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.6",
-    "coveralls": "^3.0.2",
-    "jest": "^24.1.0",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.11",
+    "coveralls": "^3.0.8",
+    "jest": "^24.9.0",
     "reflect-metadata": "^0.1.13",
     "sql.js": "^0.5.0",
-    "ts-jest": "^24.0.0",
-    "typeorm": "^0.2.13",
-    "typescript": "^3.3.3"
+    "ts-jest": "^24.1.0",
+    "typeorm": "^0.2.20",
+    "typescript": "^3.7.2"
   }
 }

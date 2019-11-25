@@ -46,7 +46,7 @@ export const encrypt = <T extends ObjectLiteral>(entity: T, includeProperties: s
 
     forMatchingColumns(entity, (propertyName, options) => {
         // For any matching columns encrypt the property
-        entity[propertyName] = encryptString(entity[propertyName], options)
+        (entity as any)[propertyName as any] = encryptString(entity[propertyName], options)
     }, includeProperties)
 
     return entity
@@ -81,7 +81,7 @@ export const decrypt = <T extends ObjectLiteral>(entity: T, includeProperties: s
 
     forMatchingColumns(entity, (propertyName, options) => {
         // For any matching columns decrypt the property
-        entity[propertyName] = decryptString(entity[propertyName], options)
+        (entity as any)[propertyName] = decryptString(entity[propertyName], options)
     }, includeProperties)
 
     return entity
